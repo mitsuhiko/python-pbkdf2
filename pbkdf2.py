@@ -58,19 +58,16 @@ def pbkdf2_bin(data, salt, iterations=1000, keylen=24, hashfunc=None):
     key of `keylen` bytes.  By default SHA-1 is used as hash function,
     a different hashlib `hashfunc` can be provided.
     """
-    mac = hmac.new(data, None, hashfunc or hashlib.sha1)
+    hashfunc = hashfunc or hashlib.sha1
+    _pseudorandom = lambda x: hmac.new(data, x, hashfunc).digest()
     def _produce(block):
-        def _pseudorandom(data):
-            h = mac.copy()
-            h.update(data)
-            return h.digest()
         rv = u = _pseudorandom(salt + pack('>i', block))
         for i in xrange(iterations - 1):
             u = _pseudorandom(u)
             rv = ''.join(chr(ord(a) ^ ord(b)) for a, b in izip(rv, u))
         return rv
-    blocks = int(ceil(float(keylen) / mac.digest_size))
-    return ''.join([_produce(i + 1) for i in xrange(blocks)])[:keylen]
+    blocks = int(ceil(float(keylen) / hashfunc().digest_size))
+    return ''.join(map(_produce, xrange(1, blocks + 1)))[:keylen]
 
 
 def test():
