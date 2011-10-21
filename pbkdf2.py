@@ -34,7 +34,7 @@
 
     3.  Store ``algorithm$salt:costfactor$hash`` in the database so that
         you can upgrade later easily to a different algorithm if you need
-        one.
+        one.  For instance ``PBKDF2-256$thesalt:10000$deadbeef...``.
 
 
     :copyright: (c) Copyright 2011 by Armin Ronacher.
