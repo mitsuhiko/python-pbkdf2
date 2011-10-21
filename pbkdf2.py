@@ -16,6 +16,26 @@
     >>> pbkdf2_hex('what i want to hash', 'the random salt')
     'fa7cc8a2b0a932f8e6ea42f9787e9d36e592e0c222ada6a9'
 
+    How to use this:
+
+    1.  Use a constant time string compare function to compare the stored hash
+        with the one you're generating::
+
+            def safe_str_cmp(a, b):
+                if len(a) != len(b):
+                    return False
+                rv = 0
+                for x, y in izip(a, b):
+                    rv |= ord(x) ^ ord(y)
+                return rv == 0
+
+    2.  Use `os.urandom` to generate a proper salt of at least 8 byte.
+        Use a unique salt per hashed password.
+
+    3.  Store ``algorithm$salt:costfactor$hash`` in the database so that
+        you can upgrade later easily to a different algorithm if you need
+        one.
+
 
     :copyright: (c) Copyright 2011 by Armin Ronacher.
     :license: BSD, see LICENSE for more details.
