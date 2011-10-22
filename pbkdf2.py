@@ -3,7 +3,7 @@
     pbkdf2
     ~~~~~~
 
-    This module implements pdkdf2 for Python.  It also has some basic
+    This module implements pbkdf2 for Python.  It also has some basic
     tests that ensure that it works.  The implementation is straightforward
     and uses stdlib only stuff and can be easily be copy/pasted into
     your favourite application.
