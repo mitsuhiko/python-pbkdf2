@@ -4,7 +4,7 @@ from setuptools import setup
 readme = open(os.path.join(os.path.dirname(__file__), 'README'), 'r').read()
 
 setup(
-    name='pbkdf2',
+    name='simple-pbkdf2',
     author='Armin Ronacher',
     author_email='armin.ronacher@active-4.com',
     version='1.0',
